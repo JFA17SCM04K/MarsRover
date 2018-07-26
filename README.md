@@ -37,14 +37,23 @@ Rover's movement is composed of two components : Rover Turning and Rover Moving.
 
 1. Rover Turning: Rover turning tells the current direction of the Rover. This is determined in the code using the 'direction' array. 
    direction = ['N','E','S','W'].
-   Now, if the Rover is asked to move 'l'- the 'direction' array needs to be traversed in the left direction.                              For Rover to move 'r'- the 'direction' array needs to be traversed in the right direction.
+   Now, 
+   For Rover to move 'l'- the 'direction' array needs to be traversed in the left direction.   
+   
+   For Rover to move 'r'- the 'direction' array needs to be traversed in the right direction.
+   
    For Rover to move 'f'- the 'direction' of ROver remains the same as the current direction.
+   
    For Rover to move 'b' - the direction gets toggled from N to S and vice-versa.
    
 2. Rover Moving: Now, when the direction of motion of Rover has been decided ROver just needs to make a step forward. 
+   
    If the direction of motion is N: the y-coordinate increases by 1.
+   
    If the direction of motion is S: the y-coordinate decreases by 1.
+   
    If the direction of motion is E: the x-coordinate increases by 1.
+   
    If the direction of motion is W: the x-coordinate decreases by 1.
    
 And before moving Rover, it is checked whether or not Rover is walking into an Obstacle. If the obstacle is encountered, an alert  message is sent.
