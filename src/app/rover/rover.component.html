@@ -1,0 +1,472 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4">MARS ROVER</h1>
+    <p class="lead">
+    STEPS:<br>
+    1. Enter the starting coordinates of the Rover.<br>
+    2. Enter if you want to put some obstacles.<br>
+    3. Enter the commands or directions you want the Rover to move. <br>
+    4. Start thr Rover.<br>
+    </p>
+  </div>
+<div *ngIf = "alert">
+  <div class="alert alert-danger" role="alert">
+    Obstacle encountered in this path!
+  </div>
+</div>
+
+<div *ngIf = "alert == 'false'">
+  <div class="alert alert-success" role="alert">
+    No obstacle encountered in this path!
+  </div>
+</div>
+
+
+<form [formGroup]="startForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <h4>1. Enter the start position</h4><input type="number" name="xValue" placeholder="x-coordinate" min="0" max="5" formControlName="xValue" class="form-control">
+    <input type="number" name="yValue" placeholder="y-coordinate" min="0" max="5" formControlName="yValue" class="form-control">
+    <input type="text" name="direction" placeholder="enter direction" maxlength="1" formControlName="direction" class="form-control">
+    <button type="submit" class="btn btn-info">Enter the start point</button>
+  </div>
+</form>
+
+<br>
+<form [formGroup]="obstacleForm" (ngSubmit)="onObstaclesAdded()">
+  <div class="form-group">
+    <h4>2. Place Obstacles</h4><input type="number" name="xValue" placeholder="x-coordinate" min="0" max="5" formControlName="xValue" class="form-control">
+    <input type="number" name="yValue" placeholder="y-coordinate" min="0" max="5" formControlName="yValue" class="form-control">
+    <button type="submit" class="btn btn-info">Add Obstacles</button>
+  </div>
+</form>
+<br>
+
+<form [formGroup]="commandForm" (ngSubmit)="onCommandsAdded()">
+  <div class="form-group">
+    <h4>3.Enter the commands - f,b,l,r</h4>
+    <input type="text" name="commands" placeholder="commands" min="1" formControlName="commands" class="form-control">
+    <button type="submit" class="btn btn-info">Enter</button>
+  </div>
+</form>
+
+<h4>4. Move Rover</h4>
+<button type="button" (click)="startRover()" class="btn btn-danger" [disabled]="startForm.invalid && commandForm.invalid">Start the Rover</button>
+<br><br>
+
+  <div class="alert alert-info" role="alert">
+    Hi! I am here facing {{startPoint.dir}} !
+  </div>
+
+
+
+<div class="col-xs-12" style="margin: 20px auto 100px auto">
+    <div class="col-xs-12">
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 0 && startPoint.y == 5">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>5-0</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 1 && startPoint.y == 5">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>5-1</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 2 && startPoint.y == 5">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>5-2</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 3 && startPoint.y == 5">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>5-3</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 4 && startPoint.y == 5">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>5-4</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 5 && startPoint.y == 5">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>5-5</p>
+        </div>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 0 && startPoint.y == 4">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>4-0</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 1 && startPoint.y == 4">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>4-1</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 2 && startPoint.y == 4">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>4-2</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 3 && startPoint.y == 4">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>4-3</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 4 && startPoint.y == 4">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>4-4</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 5 && startPoint.y == 4">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>4-5</p>
+        </div>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 0 && startPoint.y == 3">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>3-0</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 1 && startPoint.y == 3">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>3-1</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 2 && startPoint.y == 3">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>3-2</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 3 && startPoint.y == 3">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>3-3</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 4 && startPoint.y == 3">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>3-4</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 5 && startPoint.y == 3">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>3-5</p>
+        </div>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 0 && startPoint.y == 2">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>2-0</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 1 && startPoint.y == 2">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>2-1</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 2 && startPoint.y == 2">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>2-2</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 3 && startPoint.y == 2">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>2-3</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 4 && startPoint.y == 2">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>2-4</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 5 && startPoint.y == 2">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>2-5</p>
+        </div>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 0 && startPoint.y == 1">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>1-0</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 1 && startPoint.y == 1">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>1-1</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 2 && startPoint.y == 1">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>1-2</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 3 && startPoint.y == 1">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>1-3</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 4 && startPoint.y == 1">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>1-4</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 5 && startPoint.y == 1">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>1-5</p>
+        </div>
+      </span>
+    </div>
+    <div class="col-xs-12 first-row">
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 0 && startPoint.y == 0">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>0-0</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 1 && startPoint.y == 0">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>0-1</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 2 && startPoint.y == 0">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>0-2</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 3 && startPoint.y == 0">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>0-3</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 4 && startPoint.y == 0">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>0-4</p>
+        </div>
+      </span>
+      <span style="display: inline;">
+        <div class="col-xs-2">
+          <div *ngIf = "startPoint.x == 5 && startPoint.y == 0">
+            <div
+              style="width: 54px; height: 48px; opacity: 0.5"
+              [@divState]="state">
+            </div>
+          </div>
+          <p>0-5</p>
+        </div>
+      </span>
+    </div>
+</div>
+</div>
