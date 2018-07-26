@@ -56,4 +56,6 @@ Running the App:
 1.Download the code from github:
   https://github.com/JFA17SCM04K/MarsRover
   
-2.Run npm install to install all the dependencies from the package.json.
+2.Run 'npm install' to install all the dependencies from the package.json.
+
+3.To run the code - 'ng serve'
