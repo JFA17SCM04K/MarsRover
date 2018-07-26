@@ -12,9 +12,13 @@ The following tools, frameworks, and modules are required for this tutorial:
 -----------------------------------------------------------------------------
 
 Angular CLI 1.7.3
+
 Angular 5
-IDE or Text Editor
+
 Jasmine/Karma
+
+IDE or Text Editor
+
 
 SETUP:
 ---------------------
