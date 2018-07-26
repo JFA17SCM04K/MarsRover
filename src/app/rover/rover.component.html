@@ -9,17 +9,7 @@
     4. Start thr Rover.<br>
     </p>
   </div>
-<div *ngIf = "alert">
-  <div class="alert alert-danger" role="alert">
-    Obstacle encountered in this path!
-  </div>
-</div>
 
-<div *ngIf = "alert == 'false'">
-  <div class="alert alert-success" role="alert">
-    No obstacle encountered in this path!
-  </div>
-</div>
 
 
 <form [formGroup]="startForm" (ngSubmit)="onSubmit()">
@@ -56,7 +46,17 @@
   <div class="alert alert-info" role="alert">
     Hi! I am here facing {{startPoint.dir}} !
   </div>
+  <div *ngIf = "alert">
+    <div class="alert alert-danger" role="alert">
+      Obstacle encountered in this path!
+    </div>
+  </div>
 
+  <div *ngIf = "alert == 'false'">
+    <div class="alert alert-success" role="alert">
+      No obstacle encountered in this path!
+    </div>
+  </div>
 
 
 <div class="col-xs-12" style="margin: 20px auto 100px auto">

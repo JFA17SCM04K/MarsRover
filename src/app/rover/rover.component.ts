@@ -23,8 +23,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 
 export class RoverComponent implements OnInit{
+  //form to get the start point of Rover
   startForm: FormGroup;
+  //form to get the obstacle position
   obstacleForm: FormGroup;
+  //form to get the input of the  form
   commandForm: FormGroup;
 
   moveCommands = [];
@@ -60,45 +63,39 @@ export class RoverComponent implements OnInit{
     dir: null
   }
 
-  end = this.endPoint;
+
 
   ngOnInit(){
-
+    //initializing the startForm
     this.startForm = new FormGroup({
       'xValue': new FormControl(0, Validators.required),
       'yValue': new FormControl(0, Validators.required),
       'direction': new FormControl('N', Validators.required)
     });
-
+    //initializing the obstacleForm
     this.obstacleForm = new FormGroup({
       'xValue': new FormControl(0),
       'yValue': new FormControl(0)
     });
-
+    //initializing the commandForm
     this.commandForm = new FormGroup({
       'commands': new FormControl(null, Validators.required)
     })
 
 
   }
-  onAnimate(){
-    this.state == 'start' ? this.state = 'end' : this.state = 'start';
-  }
 
-  // onCommandsAdded(form: NgForm){
-  //   this.moveCommands = (form.value.commands).split("");
+
+  //getting the commands into an array
   onCommandsAdded(){
     this.moveCommands = (this.commandForm.value.commands).split("");
     console.log("Commands are: ");
     console.log(this.moveCommands);
   }
 
-  // onObstaclesAdded(form: NgForm){
+
+    //Getting the obstacles added and pushing into the obstacle array
     onObstaclesAdded(){
-    // this.newObstacle = {
-    //   x: form.value.xValue,
-    //   y: form.value.yValue
-    // };
     this.newObstacle = {
       x: this.obstacleForm.value.xValue,
       y: this.obstacleForm.value.yValue
@@ -108,15 +105,6 @@ export class RoverComponent implements OnInit{
     console.log(this.obstacles);
   }
 
-  // onSubmit(form: NgForm){
-  //
-  //     this.beginPoint.x = form.value.xValue;
-  //     this.beginPoint.y = form.value.yValue;
-  //     this.beginPoint.dir = form.value.direction;
-  //
-  //     this.startPoint.x = form.value.xValue;
-  //     this.startPoint.y = form.value.yValue;
-  //     this.startPoint.dir = form.value.direction;
   onSubmit(){
 
       this.beginPoint.x = this.startForm.value.xValue;
@@ -158,6 +146,7 @@ setCurrentDirection(){
 }
 
 onTurn(){
+  //Turning logic
   for(var i=0;i<this.moveCommands.length;i++){
     if(this.moveCommands[i] == 'l'){
       if(this.currentDirectionPointer == 0){
@@ -206,7 +195,7 @@ onTurn(){
 }
 
   moveTheObject(){
-
+    //moving the rover logic
       if(this.currentDirection == 'N'){
         this.startPoint.y += 1;
         this.checkRange();
@@ -259,6 +248,7 @@ onTurn(){
       this.startPoint.y = 5;
     }
 
+    //checking for obstacle
     for(var i=0;i<this.obstacles.length;i++){
       if(this.obstacles[i].x == this.startPoint.x && this.obstacles[i].y == this.startPoint.y){
         console.log("Alert! Obstacle is present");
