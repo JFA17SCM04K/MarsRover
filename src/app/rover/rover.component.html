@@ -10,8 +10,6 @@
     </p>
   </div>
 
-
-
 <form [formGroup]="startForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <h4>1. Enter the start position</h4><input type="number" name="xValue" placeholder="x-coordinate" min="0" max="5" formControlName="xValue" class="form-control">
@@ -32,12 +30,21 @@
 <br>
 
 <form [formGroup]="commandForm" (ngSubmit)="onCommandsAdded()">
-  <div class="form-group">
-    <h4>3.Enter the commands - f,b,l,r</h4>
-    <input type="text" name="commands" placeholder="commands" min="1" formControlName="commands" class="form-control">
-    <button type="submit" class="btn btn-info">Enter</button>
-  </div>
+  <select formControlName="commands">
+    <option value="l">Left</option>
+    <option value="r">Right</option>
+    <option value="f">Forward</option>
+    <option value="b">Backward</option>
+  </select>
+  <button type="submit" class="btn btn-info">Enter</button>
 </form>
+COMMANDS ENTERED ARE:
+<div *ngFor = "let command of moveCommands" style="display: inline;">
+-->{{command}}
+</div>
+<br>
+<br>
+<button type="button" (click)="onClear()" class="btn btn-danger">Clear all commands</button>
 
 <h4>4. Move Rover</h4>
 <button type="button" (click)="startRover()" class="btn btn-danger" [disabled]="startForm.invalid && commandForm.invalid">Start the Rover</button>

@@ -88,8 +88,16 @@ export class RoverComponent implements OnInit{
 
   //getting the commands into an array
   onCommandsAdded(){
-    this.moveCommands = (this.commandForm.value.commands).split("");
+    console.log("command added is:");
+    console.log(this.commandForm.value.commands);
+    this.moveCommands.push(this.commandForm.value.commands);
+    // this.moveCommands = (this.commandForm.value.commands).split("");
     console.log("Commands are: ");
+    console.log(this.moveCommands);
+  }
+  onClear(){
+    this.moveCommands = [];
+    console.log("commands array:");
     console.log(this.moveCommands);
   }
 
